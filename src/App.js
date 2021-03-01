@@ -21,7 +21,12 @@ function App() {
     setVisibility({visible: !visibilityState.visible});
   }
 
-  let charsList = [...currentName.name]
+  const deleteCharHandler = (index) => {
+    let charsList = currentName.name.split('');
+    charsList.splice(index, 1);
+    setNames({name: charsList.join('')});
+  };
+  
   return (
     <div className="App">
       <UserInputCounter style={style} changed={valueHandler} setVisibility={visibilityHandler}
@@ -29,7 +34,7 @@ function App() {
       {visibilityState.visible ? <div style={style}>BlaBla I'm visible</div>: null}
       <ValidationComponent style={style} length={currentName.name.length}></ValidationComponent>
       <UserOutput style={style} name={currentName.name}></UserOutput>
-      {charsList.map((char, index) => {return <CharComponent key={index} char={char}></CharComponent>})}
+      {[...currentName.name].map((char, index) => {return <CharComponent key={index} char={char} clicked={()=>deleteCharHandler(index)}></CharComponent>})}
 
     </div>
   );
